@@ -215,12 +215,12 @@ ActiveAdmin.setup do |config|
   #
   # To change the default utility navigation to show a link to your website & a logout btn
   #
-  #   config.namespace :admin do |admin|
-  #     admin.build_menu :utility_navigation do |menu|
-  #       menu.add label: "My Great Website", url: "http://www.mygreatwebsite.com", html_options: { target: :blank }
-  #       admin.add_logout_button_to_menu menu
-  #     end
-  #   end
+  config.namespace :admin do |admin|
+    admin.build_menu do |menu|
+      # menu.add label: "My Great Website", priority: 0, url: "http://www.mygreatwebsite.com", html_options: { target: :blank }
+      admin.add_logout_button_to_menu menu
+    end
+  end
   #
   # If you wanted to add a static menu item to the default menu provided:
   #
@@ -282,7 +282,7 @@ ActiveAdmin.setup do |config|
   # By default, the footer shows the current Active Admin version. You can
   # override the content of the footer here.
   #
-  # config.footer = 'my custom footer text'
+  config.footer = '© Lingo Lion 2017'
 
   # == Sorting
   #
