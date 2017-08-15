@@ -5,15 +5,18 @@ git_source(:github) do |repo_name|
   "https://github.com/#{repo_name}.git"
 end
 
-gem 'activeadmin'
-gem 'active_admin_flat_skin'
-gem 'font-awesome-rails'
+gem 'activeadmin', '~> 1.1.0'
+gem 'active_admin_flat_skin', '~> 0.1.2'
+gem 'font-awesome-rails', '~> 4.7.0.2'
+
+gem 'googleauth', '~> 0.5.3'
+gem 'redis', '~> 3.3.3'
 
 # Plus integrations with:
-gem 'devise'
-gem 'cancancan' # or cancancan
-gem 'draper'
-gem 'pundit'
+gem 'devise', '~> 4.3.0'
+gem 'cancancan', '~> 2.0.0' # or cancancan
+gem 'draper', '~> 3.0.0'
+gem 'pundit', '~> 1.1.0'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '~> 5.1.3'
