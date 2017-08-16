@@ -1,7 +1,14 @@
+require 'google/apis/calendar_v3'
 require 'googleauth'
-require 'googleauth/web_user_authorizer'
-require 'googleauth/stores/redis_token_store'
-require 'redis'
+require 'googleauth/stores/file_token_store'
+
+require 'fileutils'
+
+OOB_URI = 'http://lingolion.me:3000'
+APPLICATION_NAME = 'Lingo Lion'
+CLIENT_SECRETS_PATH = 'config/google/credentials.json'
+CREDENTIALS_PATH = File.join(Dir.home, '.credentials', "lingo-lion.yaml")
+SCOPE = Google::Apis::CalendarV3::AUTH_CALENDAR
 
 ActiveAdmin.register AdminUser do
   permit_params :email, :password, :password_confirmation
@@ -17,7 +24,15 @@ ActiveAdmin.register AdminUser do
   end
 
   collection_action :auth, method: :get do
+    respond_to do |format|
+      format.any { @credentials.to_a.to_s unless @credentials.nil? }
+    end
+  end
 
+  collection_action :auth_refresh, method: :get do
+    respond_to do |format|
+      format.any { @credentials.to_a.to_s unless @credentials.nil? }
+    end
   end
 
   collection_action :callback, method: :get do
@@ -40,32 +55,37 @@ ActiveAdmin.register AdminUser do
 
   controller do
     def auth
-      client_id = Google::Auth::ClientId.from_file('config/google/credentials.json')
-      scope = ['https://www.googleapis.com/auth/calendar']
-      token_store = Google::Auth::Stores::RedisTokenStore.new(host: 'lingolion.me', port: 6379)
-      authorizer = Google::Auth::WebUserAuthorizer.new(client_id, scope, token_store, '/callback')
+      FileUtils.mkdir_p(File.dirname(CREDENTIALS_PATH))
 
-      user_id = params[:user_id]
-
-      # if session[:credentials].nil?
-      #   begin
-      #     credentials = authorizer.get_credentials(user_id, request)
-      #   rescue StandardError => error
-      #     Rails.logger.debug error
-      #   end
-      # end
-
-      if session[:credentials].nil?
-        redirect_to authorizer.get_authorization_url(login_hint: user_id, request: request,
-                                                     redirect_to: '/admin/admin_users')
+      client_id = Google::Auth::ClientId.from_file(CLIENT_SECRETS_PATH)
+      token_store = Google::Auth::Stores::FileTokenStore.new(file: CREDENTIALS_PATH)
+      authorizer = Google::Auth::UserAuthorizer.new(client_id, SCOPE, token_store, '/callback')
+      user_id = 'default'
+      credentials = authorizer.get_credentials(user_id)
+      if credentials.nil?
+        url = authorizer.get_authorization_url(base_url: OOB_URI, scope: SCOPE, redirect_uri: admin_admin_users_path)
+        puts "Open the following URL in the browser and enter the " +
+                 "resulting code after authorization"
+        puts url
+        redirect_to url
       end
+      @credentials
+    end
 
-      "Congrats!"
+    def auth_refresh
+      FileUtils.mkdir_p(File.dirname(CREDENTIALS_PATH))
+
+      client_id = Google::Auth::ClientId.from_file(CLIENT_SECRETS_PATH)
+      token_store = Google::Auth::Stores::FileTokenStore.new(file: CREDENTIALS_PATH)
+      authorizer = Google::Auth::UserAuthorizer.new(client_id, SCOPE, token_store)
+      user_id = 'default'
+      @credentials = authorizer.get_and_store_credentials_from_code(
+          user_id: user_id, code: session[:auth_code], base_url: OOB_URI, redirect_uri: admin_admin_users_path)
     end
 
     def callback
       target_url = Google::Auth::WebUserAuthorizer.handle_auth_callback_deferred(request)
-      session[:credentials] = params[:code]
+      session[:auth_code] = params[:code]
       # session[:credentials].fetch_access_token!
       redirect_to target_url
     end

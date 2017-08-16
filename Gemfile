@@ -10,6 +10,8 @@ gem 'active_admin_flat_skin', '~> 0.1.2'
 gem 'font-awesome-rails', '~> 4.7.0.2'
 
 gem 'googleauth', '~> 0.5.3'
+gem 'google-api-client', '~> 0.13.1'
+gem 'google-id-token', '~> 1.3.1'
 gem 'redis', '~> 3.3.3'
 
 # Plus integrations with:
