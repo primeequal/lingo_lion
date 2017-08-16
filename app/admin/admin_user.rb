@@ -25,15 +25,15 @@ ActiveAdmin.register AdminUser do
 
   collection_action :auth, method: :get do
     respond_to do |format|
-      format.any { @credentials.to_a.to_s unless @credentials.nil? }
+      format.any {@credentials.to_a.to_s unless @credentials.nil?}
     end
   end
 
-  collection_action :auth_refresh, method: :get do
-    respond_to do |format|
-      format.any { @credentials.to_a.to_s unless @credentials.nil? }
-    end
-  end
+  # collection_action :events, method: :get do
+  #   respond_to do |format|
+  #     format.any {@credentials.to_a.to_s unless @credentials.nil?}
+  #   end
+  # end
 
   collection_action :callback, method: :get do
 
@@ -63,31 +63,65 @@ ActiveAdmin.register AdminUser do
       user_id = 'default'
       credentials = authorizer.get_credentials(user_id)
       if credentials.nil?
-        url = authorizer.get_authorization_url(base_url: OOB_URI, scope: SCOPE, redirect_uri: admin_admin_users_path)
+        url = authorizer.get_authorization_url(base_url: OOB_URI, scope: SCOPE, redirect_uri: '/callback')
         puts "Open the following URL in the browser and enter the " +
                  "resulting code after authorization"
         puts url
         redirect_to url
+        credentials = authorizer.get_and_store_credentials_from_code(
+            user_id: user_id, code: session[:auth_code], base_url: OOB_URI, redirect_uri: '/admin/admin_users')
       end
-      @credentials
+      credentials
+
+      # Initialize the API
+      service = Google::Apis::CalendarV3::CalendarService.new
+      service.client_options.application_name = APPLICATION_NAME
+      service.authorization = credentials
+
+      # Fetch the next 10 events for the user
+      calendar_id = 'primary'
+      response = service.list_events(calendar_id,
+                                     max_results: 10,
+                                     single_events: true,
+                                     order_by: 'startTime',
+                                     time_min: Time.now.iso8601)
+
+      puts "Upcoming events:"
+      puts "No upcoming events found" if response.items.empty?
+      response.items.each do |event|
+        start = event.start.date || event.start.date_time
+        puts "- #{event.summary} (#{start})"
+      end
     end
 
-    def auth_refresh
-      FileUtils.mkdir_p(File.dirname(CREDENTIALS_PATH))
-
-      client_id = Google::Auth::ClientId.from_file(CLIENT_SECRETS_PATH)
-      token_store = Google::Auth::Stores::FileTokenStore.new(file: CREDENTIALS_PATH)
-      authorizer = Google::Auth::UserAuthorizer.new(client_id, SCOPE, token_store)
-      user_id = 'default'
-      @credentials = authorizer.get_and_store_credentials_from_code(
-          user_id: user_id, code: session[:auth_code], base_url: OOB_URI, redirect_uri: admin_admin_users_path)
-    end
+    # def events
+    #   # Initialize the API
+    #   service = Google::Apis::CalendarV3::CalendarService.new
+    #   service.client_options.application_name = APPLICATION_NAME
+    #   service.authorization = authorize
+    #
+    #   # Fetch the next 10 events for the user
+    #   calendar_id = 'primary'
+    #   response = service.list_events(calendar_id,
+    #                                  max_results: 10,
+    #                                  single_events: true,
+    #                                  order_by: 'startTime',
+    #                                  time_min: Time.now.iso8601)
+    #
+    #   puts "Upcoming events:"
+    #   puts "No upcoming events found" if response.items.empty?
+    #   response.items.each do |event|
+    #     start = event.start.date || event.start.date_time
+    #     puts "- #{event.summary} (#{start})"
+    #   end
+    # end
 
     def callback
       target_url = Google::Auth::WebUserAuthorizer.handle_auth_callback_deferred(request)
+      puts request.env
       session[:auth_code] = params[:code]
       # session[:credentials].fetch_access_token!
-      redirect_to target_url
+      redirect_to '/admin/admin_users'
     end
   end
 end
