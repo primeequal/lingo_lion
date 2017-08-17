@@ -4,6 +4,6 @@ Rails.application.routes.draw do
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 
   as :admin_users do
-    get '/callback', to: 'admin/admin_users#callback'
+    get '/callback', to: 'admin/events#callback'
   end
 end
