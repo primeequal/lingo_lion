@@ -58,8 +58,6 @@ ActiveAdmin.register_page 'Events' do
 
     def callback
       @target_url = google_oauth2_callback session
-      puts "@target_url => #{@target_url}"
-      @target_url
     end
   end
 end

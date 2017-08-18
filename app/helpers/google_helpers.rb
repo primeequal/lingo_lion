@@ -68,8 +68,6 @@ module GoogleHelpers
       return @redirect_url = credentials
     end
 
-    puts "credentials => #{credentials}"
-
     # Initialize the API
     service = Google::Apis::CalendarV3::CalendarService.new
     service.client_options.application_name = APPLICATION_NAME
