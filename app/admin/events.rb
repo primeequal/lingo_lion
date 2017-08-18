@@ -1,12 +1,10 @@
-require 'google/apis/calendar_v3'
+include GoogleHelpers
 
-SCOPE = Google::Apis::CalendarV3::AUTH_CALENDAR
+ActiveAdmin.register_page 'Events' do
 
-ActiveAdmin.register_page "Events" do
+  menu priority: 1, label: proc { I18n.t('dashboard.menu.events') }
 
-  menu priority: 1, label: proc {I18n.t("dashboard.menu.events")}
-
-  content title: proc {I18n.t("dashboard.menu.events")} do
+  content title: proc { I18n.t('dashboard.menu.events') } do
     div class: "blank_slate_container", id: "dashboard_default_message" do
       span class: "blank_slate" do
         span I18n.t("active_admin.dashboard_welcome.welcome")
@@ -16,80 +14,52 @@ ActiveAdmin.register_page "Events" do
 
     # Here is an example of a simple dashboard with columns and panels.
     #
-    # columns do
-    #   column do
-    #     panel "Recent Posts" do
-    #       ul do
-    #         Post.recent(5).map do |post|
-    #           li link_to(post.title, admin_post_path(post))
-    #         end
-    #       end
-    #     end
-    #   end
-
-    #   column do
-    #     panel "Info" do
-    #       para "Welcome to ActiveAdmin."
-    #     end
-    #   end
-    # end
+    columns do
+      column do
+        panel "Upcoming Events" do
+          ul do
+            get_calendar.items.each do |event|
+              start = event.start.date || event.start.date_time
+              li do
+                a(HREF: event.html_link, TARGET: 'lingo_lion_event') {"#{event.summary} (#{start})"}
+              end
+            end
+          end
+        end
+      end
+    end
   end # content
 
   page_action :all do
     respond_to do |format|
-      format.any {}
+      format.html {}
     end
   end
 
   page_action :callback do
     respond_to do |format|
-      format.any {}
+      format.html {}
     end
   end
 
   controller do
-    include GoogleHelpers
+    layout :determine_active_admin_layout
+
+    before_action except: [:callback] do
+      @redirect_url = get_calendar
+      render 'all' if @redirect_url.kind_of? String
+    end
+
+    # include GoogleHelpers
 
     def all
-      credentials = credentials_for SCOPE
-      if credentials.nil? || credentials.kind_of?(String)
-        # Credentials were not found and the user needs to reauthorize
-        puts 'User reauthorization required'
-        return @redirect_url = credentials
-      end
-
-      puts "credentials => #{credentials}"
-
-      # Initialize the API
-      service = Google::Apis::CalendarV3::CalendarService.new
-      service.client_options.application_name = APPLICATION_NAME
-      service.authorization = credentials
-
-      # Fetch the next 10 events for the user
-      calendar_id = 'primary'
-      begin
-        response = service.list_events(calendar_id,
-                                       max_results: 10,
-                                       single_events: true,
-                                       order_by: 'startTime',
-                                       time_min: Time.now.iso8601)
-      rescue => ex
-        # More than likely the user revoked permissions
-        puts ex
-        revoke_google_user_auth SCOPE
-        return
-      end
-
-      puts "Upcoming events:"
-      puts "No upcoming events found" if response.items.empty?
-      response.items.each do |event|
-        start = event.start.date || event.start.date_time
-        puts "- #{event.summary} (#{start})"
-      end
+      get_calendar
     end
 
     def callback
       @target_url = google_oauth2_callback session
+      puts "@target_url => #{@target_url}"
+      @target_url
     end
   end
 end

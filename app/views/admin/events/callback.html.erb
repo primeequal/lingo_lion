@@ -1,1 +1,3 @@
+<h2>Authorization successfull! You should be automatically redirected.</h2>
+<div>If automatic redirect fails <a href="<% "#{@target_url}" %>">Click here</a>.</div>
 <%= javascript_tag("window.location='#{@target_url}'") unless @target_url.nil? %>
