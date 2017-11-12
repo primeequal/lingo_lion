@@ -1,12 +1,12 @@
 source 'https://rubygems.org'
 
 git_source(:github) do |repo_name|
-  repo_name = "#{repo_name}/#{repo_name}" unless repo_name.include?("/")
+  repo_name = "#{repo_name}/#{repo_name}" unless repo_name.include?('/')
   "https://github.com/#{repo_name}.git"
 end
 
 gem 'activeadmin', '~> 1.1.0'
-gem 'active_admin_flat_skin', '~> 0.1.2'
+gem 'active_material', github: 'vigetlabs/active_material'
 gem 'font-awesome-rails', '~> 4.7.0.2'
 
 gem 'googleauth', '~> 0.5.3'

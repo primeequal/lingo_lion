@@ -5,10 +5,10 @@ ActiveAdmin.register_page 'Events' do
   menu priority: 1, label: proc { I18n.t('dashboard.menu.events') }
 
   content title: proc { I18n.t('dashboard.menu.events') } do
-    div class: "blank_slate_container", id: "dashboard_default_message" do
-      span class: "blank_slate" do
-        span I18n.t("active_admin.dashboard_welcome.welcome")
-        small I18n.t("active_admin.dashboard_welcome.call_to_action")
+    div class: 'blank_slate_container', id: 'dashboard_default_message' do
+      span class: 'blank_slate' do
+        span I18n.t('active_admin.dashboard_welcome.welcome')
+        small I18n.t('active_admin.dashboard_welcome.call_to_action')
       end
     end
 
@@ -16,7 +16,7 @@ ActiveAdmin.register_page 'Events' do
     #
     columns do
       column do
-        panel "Upcoming Events" do
+        panel 'Upcoming Events' do
           ul do
             get_calendar.items.each do |event|
               start = event.start.date || event.start.date_time
