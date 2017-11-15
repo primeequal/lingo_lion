@@ -1,6 +1,6 @@
-ActiveAdmin.register AdminUser do
+ActiveAdmin.register User do
 
-  menu priority: 1, label: proc { I18n.t('dashboard.menu.admin_users') }
+  menu priority: 1, label: proc { I18n.t('dashboard.menu.users') }
 
   permit_params :email, :password, :password_confirmation
 

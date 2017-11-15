@@ -34,3 +34,5 @@ en:
   dashboard:
     menu:
       events: "Events"
+      admin_users: "Admin Users"
+      users: "Users"

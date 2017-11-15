@@ -2,7 +2,7 @@ include GoogleHelpers
 
 ActiveAdmin.register_page 'Events' do
 
-  menu priority: 1, label: proc { I18n.t('dashboard.menu.events') }
+  menu priority: 2, label: proc { I18n.t('dashboard.menu.events') }
 
   content title: proc { I18n.t('dashboard.menu.events') } do
     div class: 'blank_slate_container', id: 'dashboard_default_message' do
