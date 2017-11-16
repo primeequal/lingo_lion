@@ -1,5 +1,3 @@
-include GoogleHelpers
-
 ActiveAdmin.register_page 'Events' do
 
   menu priority: 2, label: proc { I18n.t('dashboard.menu.events') }
@@ -14,50 +12,50 @@ ActiveAdmin.register_page 'Events' do
 
     # Here is an example of a simple dashboard with columns and panels.
     #
-    columns do
-      column do
-        panel 'Upcoming Events' do
-          ul do
-            get_calendar.items.each do |event|
-              start = event.start.date || event.start.date_time
-              li do
-                a(HREF: event.html_link, TARGET: 'lingo_lion_event') {"#{event.summary} (#{start})"}
-              end
-            end
-          end
-        end
-      end
-    end
+    # columns do
+    #   column do
+    #     panel 'Upcoming Events' do
+    #       ul do
+    #         get_calendar.items.each do |event|
+    #           start = event.start.date || event.start.date_time
+    #           li do
+    #             a(HREF: event.html_link, TARGET: 'lingo_lion_event') {"#{event.summary} (#{start})"}
+    #           end
+    #         end
+    #       end
+    #     end
+    #   end
+    # end
   end # content
 
-  page_action :all do
-    respond_to do |format|
-      format.html {}
-    end
-  end
-
-  page_action :callback do
-    respond_to do |format|
-      format.html {}
-    end
-  end
-
-  controller do
-    layout :determine_active_admin_layout
-
-    before_action except: [:callback] do
-      @redirect_url = get_calendar
-      render 'all' if @redirect_url.kind_of? String
-    end
-
-    # include GoogleHelpers
-
-    def all
-      get_calendar
-    end
-
-    def callback
-      @target_url = google_oauth2_callback session
-    end
-  end
+  # page_action :all do
+  #   respond_to do |format|
+  #     format.html {}
+  #   end
+  # end
+  #
+  # page_action :callback do
+  #   respond_to do |format|
+  #     format.html {}
+  #   end
+  # end
+  #
+  # controller do
+  #   layout :determine_active_admin_layout
+  #
+  #   before_action except: [:callback] do
+  #     @redirect_url = get_calendar
+  #     render 'all' if @redirect_url.kind_of? String
+  #   end
+  #
+  #   # include GoogleHelpers
+  #
+  #   def all
+  #     get_calendar
+  #   end
+  #
+  #   def callback
+  #     @target_url = google_oauth2_callback session
+  #   end
+  # end
 end

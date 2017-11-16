@@ -6,8 +6,4 @@ Rails.application.routes.draw do
       sessions: 'users/sessions', registrations: 'users/registrations', passwords: 'users/passwords',
       omniauth_callbacks: 'users/omniauth_callbacks'
   }
-
-  as :admin_users do
-    get '/callback', to: 'admin/events#callback'
-  end
 end
