@@ -42,7 +42,6 @@
     <orderEntry type="library" scope="PROVIDED" name="bcrypt (v3.1.11, RVM: ruby-2.4.0) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="bindex (v0.5.0, RVM: ruby-2.4.0) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="bootstrap (v4.0.0.beta2.1, RVM: ruby-2.4.0) [gem]" level="application" />
-    <orderEntry type="library" scope="PROVIDED" name="bootstrap-sass (v3.3.7, RVM: ruby-2.4.0) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="builder (v3.2.3, RVM: ruby-2.4.0) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="bundler (v1.16.0, RVM: ruby-2.4.0) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="byebug (v9.1.0, RVM: ruby-2.4.0) [gem]" level="application" />
@@ -60,7 +59,7 @@
     <orderEntry type="library" scope="PROVIDED" name="draper (v3.0.1, RVM: ruby-2.4.0) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="erubi (v1.7.0, RVM: ruby-2.4.0) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="execjs (v2.7.0, RVM: ruby-2.4.0) [gem]" level="application" />
-    <orderEntry type="library" scope="PROVIDED" name="faraday (v0.13.1, RVM: ruby-2.4.0) [gem]" level="application" />
+    <orderEntry type="library" scope="PROVIDED" name="faraday (v0.12.2, RVM: ruby-2.4.0) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="ffi (v1.9.18, RVM: ruby-2.4.0) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="font-awesome-rails (v4.7.0.2, RVM: ruby-2.4.0) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="formtastic (v3.1.5, RVM: ruby-2.4.0) [gem]" level="application" />
@@ -70,6 +69,7 @@
     <orderEntry type="library" scope="PROVIDED" name="google-id-token (v1.3.1, RVM: ruby-2.4.0) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="googleauth (v0.5.3, RVM: ruby-2.4.0) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="has_scope (v0.7.1, RVM: ruby-2.4.0) [gem]" level="application" />
+    <orderEntry type="library" scope="PROVIDED" name="hashie (v3.5.6, RVM: ruby-2.4.0) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="httpclient (v2.8.3, RVM: ruby-2.4.0) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="i18n (v0.9.1, RVM: ruby-2.4.0) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="inherited_resources (v1.7.2, RVM: ruby-2.4.0) [gem]" level="application" />
@@ -92,10 +92,15 @@
     <orderEntry type="library" scope="PROVIDED" name="mini_portile2 (v2.3.0, RVM: ruby-2.4.0) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="minitest (v5.10.3, RVM: ruby-2.4.0) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="multi_json (v1.12.2, RVM: ruby-2.4.0) [gem]" level="application" />
+    <orderEntry type="library" scope="PROVIDED" name="multi_xml (v0.6.0, RVM: ruby-2.4.0) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="multipart-post (v2.0.0, RVM: ruby-2.4.0) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="mysql2 (v0.4.9, RVM: ruby-2.4.0) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="nio4r (v2.1.0, RVM: ruby-2.4.0) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="nokogiri (v1.8.1, RVM: ruby-2.4.0) [gem]" level="application" />
+    <orderEntry type="library" scope="PROVIDED" name="oauth2 (v1.4.0, RVM: ruby-2.4.0) [gem]" level="application" />
+    <orderEntry type="library" scope="PROVIDED" name="omniauth (v1.7.1, RVM: ruby-2.4.0) [gem]" level="application" />
+    <orderEntry type="library" scope="PROVIDED" name="omniauth-google-oauth2 (v0.5.2, RVM: ruby-2.4.0) [gem]" level="application" />
+    <orderEntry type="library" scope="PROVIDED" name="omniauth-oauth2 (v1.4.0, RVM: ruby-2.4.0) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="orm_adapter (v0.5.0, RVM: ruby-2.4.0) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="os (v0.9.6, RVM: ruby-2.4.0) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="polyamorous (v1.3.1, RVM: ruby-2.4.0) [gem]" level="application" />
@@ -109,7 +114,7 @@
     <orderEntry type="library" scope="PROVIDED" name="rails-dom-testing (v2.0.3, RVM: ruby-2.4.0) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="rails-html-sanitizer (v1.0.3, RVM: ruby-2.4.0) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="railties (v5.1.4, RVM: ruby-2.4.0) [gem]" level="application" />
-    <orderEntry type="library" scope="PROVIDED" name="rake (v12.2.1, RVM: ruby-2.4.0) [gem]" level="application" />
+    <orderEntry type="library" scope="PROVIDED" name="rake (v12.3.0, RVM: ruby-2.4.0) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="ransack (v1.8.4, RVM: ruby-2.4.0) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="rb-fsevent (v0.10.2, RVM: ruby-2.4.0) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="rb-inotify (v0.9.10, RVM: ruby-2.4.0) [gem]" level="application" />

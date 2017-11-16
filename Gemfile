@@ -14,10 +14,11 @@ gem 'googleauth', '~> 0.5.3'
 gem 'google-api-client', '~> 0.13.1'
 gem 'google-id-token', '~> 1.3.1'
 gem 'redis', '~> 3.3.3'
+gem 'omniauth-google-oauth2', '~> 0.5.2'
 
 # Plus integrations with:
 gem 'devise', '~> 4.3.0'
-gem 'cancancan', '~> 2.0.0' # or cancancan
+gem 'cancancan', '~> 2.0.0'
 gem 'draper', '~> 3.0.0'
 gem 'pundit', '~> 1.1.0'
 
